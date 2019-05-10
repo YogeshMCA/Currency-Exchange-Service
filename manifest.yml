@@ -1,0 +1,7 @@
+applications:
+- name: CurrExchange
+  instances: 1
+  memory: 1G
+  path: target/CurrExchange-0.0.1-SNAPSHOT.jar
+  services:
+  - Service-Registry
