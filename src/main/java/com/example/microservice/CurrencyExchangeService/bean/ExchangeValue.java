@@ -1,12 +1,13 @@
 package com.example.microservice.CurrencyExchangeService.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 @Entity
-public class ExchangeValue {
+public class ExchangeValue implements Serializable{
 @Column(name="currency_from")
 private String from;
 @Column(name="currency_to")
