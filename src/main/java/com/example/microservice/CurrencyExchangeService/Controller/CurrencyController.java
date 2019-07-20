@@ -1,15 +1,9 @@
 package com.example.microservice.CurrencyExchangeService.Controller;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +13,10 @@ import com.example.microservice.CurrencyExchangeService.bean.ExchangeValue;
 import com.example.microservice.CurrencyExchangeService.repositories.ExchangeValueRepository;
 @RestController
 public class CurrencyController {
+	
+	
+	@Value("${usdtoinr}")
+	private String uSDToInr;
 	
 	@Autowired
 	private Environment environment;
@@ -53,6 +51,7 @@ public class CurrencyController {
 		}
 		return hashOperations.values("TABLE_DATA").get(0) ;
 	}*/
+	
 	@GetMapping(path="/exchange-service-cache/from/{from}/to/{to}")
 	public ExchangeValue exchange(@PathVariable String from,@PathVariable String to){
 		
@@ -71,7 +70,6 @@ public class CurrencyController {
 	}
 	
 	
-
 	@GetMapping(path="/exchange-service/from/{from}/to/{to}")
 	public ExchangeValue exchangeValue(@PathVariable String from,@PathVariable String to){
 		
@@ -80,4 +78,9 @@ public class CurrencyController {
 		return exchange;
 	}
 
+	@GetMapping(path="/exchange-service-cfg-server/from/{from}/to/{to}")
+	public String exchangeValueFrmServer(@PathVariable String from,@PathVariable String to){
+						
+		return from+" To "+ to +":"+uSDToInr;
+	}
 }
